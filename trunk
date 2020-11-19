@@ -3,12 +3,22 @@
 
 set -euo pipefail
 
+# Default branches to attempt to swap to.
+# Order in the list is the order that they are attempted to be loaded in, so your first choice should be first.
+branches="master,main"
+
 # Parse arguments passed to the script
 function parse_args() {
     while [ "$#" -gt 0 ]; do
       case "$1" in
-        -h | --help) help 1>&2 ;;
-        -b | --branches) echo "TODO" ;;
+        -h | --help)
+          help 1>&2
+          exit 0
+          ;;
+        -b | --branches)
+          branches="${2}"
+          shift
+          ;;
         *) ;;
       esac
       shift
@@ -20,15 +30,28 @@ function help() {
   echo "Trunk: switch back to the trunk branch of your git repository"
   echo ""
   echo "Usage:"
-  printf "\ttrunk <flags>\n"
+  printf "\t%s\n" "trunk <flags>"
   echo ""
   echo "Available flags:"
   printf "\t--help | -h\n"
-  printf "\t--branches | -b\n"
+  printf "\t--branches | -b \tDefault values: %s\n" "${branches}"
 }
 
-# Main processing location
+# Core logic for parsing branches and swapping
 function main() {
   parse_args "$@"
+
+  IFS="," read -ra branches_array <<< "${branches}"
+  for branch in "${branches_array[@]}"; do
+    echo "Checking for branch ${branch}" 1>&2
+    if [[ $(git rev-parse --verify "${branch}" 2>/dev/null) ]]; then
+      git checkout "${branch}"
+      exit 0
+    fi
+  done
+  unset IFS
+
+  echo "Unable to locate the trunk branch with any of the given branches" 1>&2
+  exit 1
 }
 main "$@"
