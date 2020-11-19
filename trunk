@@ -1,5 +1,34 @@
 #!/usr/bin/env bash
 ## Switch back to the trunk branch of your git repository
 
-echo "Hello world"
+set -euo pipefail
 
+# Parse arguments passed to the script
+function parse_args() {
+    while [ "$#" -gt 0 ]; do
+      case "$1" in
+        -h | --help) help 1>&2 ;;
+        -b | --branches) echo "TODO" ;;
+        *) ;;
+      esac
+      shift
+    done
+}
+
+# Help menu
+function help() {
+  echo "Trunk: switch back to the trunk branch of your git repository"
+  echo ""
+  echo "Usage:"
+  printf "\ttrunk <flags>\n"
+  echo ""
+  echo "Available flags:"
+  printf "\t--help | -h\n"
+  printf "\t--branches | -b\n"
+}
+
+# Main processing location
+function main() {
+  parse_args "$@"
+}
+main "$@"
