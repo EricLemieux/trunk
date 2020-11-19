@@ -5,7 +5,7 @@ set -euo pipefail
 
 # Default branches to attempt to swap to.
 # Order in the list is the order that they are attempted to be loaded in, so your first choice should be first.
-branches="master,main"
+branches="develop,master,main"
 
 # Parse arguments passed to the script
 function parse_args() {
