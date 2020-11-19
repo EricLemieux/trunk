@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+## Switch back to the trunk branch of your git repository
+
+echo "Hello world"
+
