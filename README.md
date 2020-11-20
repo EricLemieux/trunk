@@ -2,10 +2,14 @@
 
 Simple command that switches back to the trunk branch of your git repository.
 
+This is probably only a me problem, but I work on a lot of different projects that use different branches as their main
+trunk branch; develop, master, main, etc. This tool makes it easier to switch back to your trunk branch, so that you
+don't have to remember which branch corresponds to which project.
+
 ## Install
 
 ```shell script
-make && sudo make install
+sudo make install
 ```
 
 ## Usage
@@ -19,4 +23,5 @@ you can use the `--help` flag.
 trunk
 trunk --branches foo,bar,baz
 trunk --help
+trunk && git pull
 ```
