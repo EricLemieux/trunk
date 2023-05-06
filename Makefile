@@ -4,5 +4,5 @@ build:
 
 .PHONY: install
 install:
-	sudo install -Dm 755 trunk /usr/local/bin
+	sudo install -m 755 trunk /usr/local/bin
 
